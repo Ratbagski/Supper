@@ -248,7 +248,7 @@ function persist(){
 }
 function payload(){
   return { title:state.title, recipes:state.recipes, extras:state.extras, checked:state.checked,
-           aisles:state.aisles, overrides:state.overrides, updated:state.updated };
+           aisles:state.aisles, overrides:state.overrides, packs:state.packs||[], updated:state.updated };
 }
 
 /* ---------- state ------------------------------------------------ */
@@ -680,6 +680,11 @@ function openSettings(){
       </div>
       <div class="hint">Last pushed ${fmtStamp(sync.lastPush)}. Last pulled ${fmtStamp(sync.lastPull)}.</div></div>
 
+    <div class="field"><label for="s_import">Import recipes</label>
+      <div class="hint" style="margin:0 0 6px">Paste the JSON Claude gives you. Anything already in the book is skipped.</div>
+      <textarea id="s_import" rows="4" placeholder='[{"title":"Chilli oil noodles","ingredients":["200g noodles","2 tbsp chilli oil"],"steps":["Boil","Toss"]}]'></textarea>
+      <button class="btn sm" style="margin-top:8px" data-action="import">Import</button></div>
+
     <div class="field"><label>Backup by hand</label>
       <div class="row"><button class="btn sm" data-action="backup-copy">Copy backup</button>
         <button class="btn sm" data-action="backup-paste">Paste a backup</button></div></div>
@@ -806,6 +811,34 @@ document.addEventListener('click',async e=>{
     try{ if(!sync.gist){ toast('Add the gist id first'); return; }
       toast('Pulling…'); if(await cloudPull()){ closeSheet(); render(); toast('Pulled down'); } }
     catch(err){ toast(err.message); } return; }
+  if(a==='import'){
+    const raw=document.getElementById('s_import').value.trim();
+    if(!raw){ toast('Paste something first'); return; }
+    let list;
+    try{ list=JSON.parse(raw); }catch(err){ toast('That is not valid JSON'); return; }
+    if(list&&Array.isArray(list.recipes)) list=list.recipes;
+    if(!Array.isArray(list)) list=[list];
+    const have=new Set(state.recipes.map(r=>norm(r.title)));
+    let n=0, skipped=0;
+    list.forEach(p=>{
+      if(!p||!p.title) return;
+      if(have.has(norm(p.title))){ skipped++; return; }
+      const ings=(p.ingredients||[]).map(i=>{
+        if(typeof i==='string'){ const q=parseLine(i); return q||null; }
+        return { amount:i.amount==null?null:i.amount, unit:i.unit||null,
+                 item:i.item||i.name||'', section:i.section||null };
+      }).filter(i=>i&&i.item);
+      const rec={ id:uid(), title:String(p.title).trim(), photo:p.photo||null,
+        servings:parseInt(p.servings,10)||2, mult:1, queued:false,
+        source:p.source||p.link||'', tags:(p.tags||[]).map(String),
+        ingredients:ings, steps:(p.steps||p.method||[]).map(String),
+        notes:p.notes||'', madeLog:[] };
+      rec.kind=p.kind||guessKind(rec);
+      state.recipes.push(rec); have.add(norm(rec.title)); n++;
+    });
+    persist(); closeSheet(); ui.tab='recipes'; render();
+    toast(n?n+' imported'+(skipped?', '+skipped+' already there':''):'Nothing new to add');
+    return; }
   if(a==='backup-copy'){ copyText(JSON.stringify(payload()),'Backup copied'); return; }
   if(a==='backup-paste'){
     const raw=prompt('Paste the backup text:'); if(!raw) return;
@@ -877,6 +910,28 @@ document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()
     document.head.appendChild(link);
   }catch(e){}
 })();
+
+/* ---------- Isaiah's old recipe book, merged in once ------------- */
+const PACK_ID='oldbook';
+const PACK=[{"title":"Acai Bowl","kind":"Vegetarian","tags":["dessert","cheap","quick"],"servings":2,"ingredients":[{"amount":1.0,"unit":null,"item":"Banana"},{"amount":0.5,"unit":"cup","item":"Blueberries"},{"amount":0.5,"unit":"cup","item":"Strawberries"},{"amount":0.75,"unit":"cup","item":"Milk"},{"amount":0.5,"unit":"cup","item":"Yoghurt"},{"amount":2.0,"unit":"pack","item":"Frozen Acai Puree"},{"amount":null,"unit":null,"item":"Fruit Choice, Nuts, Granola, as required"}],"steps":["Blend using blender, all Acai Puree ingredients on low","Top with choice of fruits, nuts, seeds, and/or granola"]},{"title":"Avocado Egg Toast","kind":"Vegetarian","tags":["main","cheap","quick"]},{"title":"Beef Pepper Rice","kind":"Beef","tags":["main","cheap","quick"],"servings":3,"ingredients":[{"amount":2.0,"unit":"cup","item":"Rice"},{"amount":1.0,"unit":"pack","item":"Thin Slice Beef"},{"amount":40.0,"unit":"g","item":"Butter"},{"amount":0.25,"unit":"cup","item":"Corn Kernels"},{"amount":0.25,"unit":"cup","item":"Spring Onion"},{"amount":4.0,"unit":"tbsp","item":"Maple syrup"},{"amount":4.0,"unit":"tbsp","item":"Light Soy Sauce"},{"amount":2.0,"unit":"tbsp","item":"Mirin"},{"amount":2.0,"unit":"tbsp","item":"Water"},{"amount":1.0,"unit":"tsp","item":"Garlic Powder"},{"amount":0.5,"unit":"tsp","item":"Pepper"},{"amount":0.5,"unit":"tsp","item":"Onion Powder"}],"steps":["Cook Rice","Combine sauce ingredients","Semi-cook the beef and push to the side of the pan. Add half of butter to the middle","Add a bowl of rice in the middle, on top of butter","Drizzle sauce over rice and beef.","Add corn and spring onion","Cook for 2-3 minutes untouched.","Add remaining butter on top of rice, add pepper and add all spring onion"]},{"title":"Bibimbap","kind":"Beef","tags":["main","cheap","quick","veg option"]},{"title":"Birria Taco","kind":"Beef","tags":["main"]},{"title":"Bloomin Onion","kind":"Other","tags":[]},{"title":"Blue Cheese Sauce","kind":"Other","tags":["sauce"]},{"title":"Braised Beef Short Ribs","kind":"Beef","tags":["main"]},{"title":"Breakfast Burrito","kind":"Pork","tags":["cheap","quick","veg option"]},{"title":"Bruschetta","kind":"Vegetarian","tags":["cheap","quick"]},{"title":"Burger Sliders","kind":"Beef","tags":["snack","cheap","quick"]},{"title":"Burger Steak","kind":"Beef","tags":["main","cheap"]},{"title":"Butter Braised Asparagus","kind":"Vegetarian","tags":["side","cheap","quick"]},{"title":"Butter Chicken","kind":"Chicken","tags":["main"]},{"title":"Caramelised Onion and Beef Sausage Rolls","kind":"Beef","tags":["snack","cheap"]},{"title":"Cheese Quesadilla","kind":"Vegetarian","tags":["snack","cheap","quick"]},{"title":"Cheesy Cauliflower","kind":"Vegetarian","tags":["side","cheap","quick"],"servings":2,"ingredients":[{"amount":1.0,"unit":null,"item":"Cauliflower"},{"amount":null,"unit":null,"item":"Salt and Pepper, as required"},{"amount":60.0,"unit":"g","item":"Butter"},{"amount":3.5,"unit":"tbsp","item":"Flour"},{"amount":1.0,"unit":"cup","item":"Milk"},{"amount":1.0,"unit":"cup","item":"Thickened Cream"},{"amount":0.5,"unit":"tsp","item":"Salt"},{"amount":0.25,"unit":"tsp","item":"Nutmeg"},{"amount":1.5,"unit":"cup","item":"Cheese"}],"steps":["Boil and cook cauliflower pieces for 5 mins, then drain","Preheat oven to 180C","Heat milk and cream","Make the roux by melting the butter and mixing with flour for 3 mins","Add the milk and cream slowly to the roux","Add the cheese and spices","Pour or dip cauliflowers into sauce and transfer to baking dish.","Top with more cheese and bake for 20mins until golden and bubbly"]},{"title":"Chia Pudding","kind":"Vegetarian","tags":["dessert","cheap","quick"]},{"title":"Chicken Adobo","kind":"Chicken","tags":["main"]},{"title":"Chicken Ala King","kind":"Chicken","tags":["main"]},{"title":"Chicken Cutlet Caesar Salad","kind":"Other","tags":[]},{"title":"Chicken Katsu","kind":"Chicken","tags":["main","cheap"]},{"title":"Chicken Parmigiana","kind":"Chicken","tags":["main","cheap","quick"]},{"title":"Chicken Pot Pie","kind":"Chicken","tags":["main"]},{"title":"Chicken Risotto","kind":"Chicken","tags":["main"]},{"title":"Chipotle Cilantro Lime Rice","kind":"Vegetarian","tags":["side","cheap","quick"]},{"title":"Cold Soba Noodles","kind":"Vegetarian","tags":["snack","cheap","quick"]},{"title":"Cold Soba Noodles","kind":"Vegetarian","tags":["snack","cheap","quick"]},{"title":"Corn Ribs","kind":"Vegetarian","tags":["snack","cheap","quick"]},{"title":"Creamy Lemon Chicken","kind":"Chicken","tags":["main"]},{"title":"Creamy Shrimp Scampi Linguine","kind":"Seafood","tags":["main"]},{"title":"Crispy Buffalo Chicken Wings","kind":"Chicken","tags":["main","cheap"]},{"title":"Crispy Parmesan Roasted Brussel Sprouts","kind":"Vegetarian","tags":["side","cheap","quick"]},{"title":"Crispy Roast Potato","kind":"Vegetarian","tags":["side","cheap","quick"]},{"title":"Crunchwrap Supreme","kind":"Beef","tags":["main"]},{"title":"Deviled Eggs","kind":"Vegetarian","tags":["snack","cheap","quick"]},{"title":"Egg Drop Soup","kind":"Vegetarian","tags":["snack","cheap","quick"]},{"title":"Firecracker Salmon","kind":"Seafood","tags":["main","quick"]},{"title":"Flautas","kind":"Chicken","tags":["snack","veg option"]},{"title":"French Onion Soup","kind":"Vegetarian","tags":["snack","cheap","quick"]},{"title":"Fried Rice","kind":"Chicken","tags":["side","cheap","quick","veg option"]},{"title":"Garlic Shrimp/Mussel/Clam Scampi","kind":"Seafood","tags":["main","quick"]},{"title":"General Tso’s Chicken","kind":"Chicken","tags":["main","cheap"]},{"title":"Green/Red Thai Curry","kind":"Chicken","tags":["cheap","veg option"]},{"title":"Guacamole","kind":"Vegetarian","tags":["side","cheap","quick"]},{"title":"Halal Chicken and Rice","kind":"Chicken","tags":["main"]},{"title":"Hawaiian Garlic Shrimp and Rice","kind":"Seafood","tags":["quick"]},{"title":"Honey Butter Glazed Carrots with “sauce”","kind":"Vegetarian","tags":["side","cheap","quick"]},{"title":"Honey Garlic Chicken/Beef Fried Rice","kind":"Chicken","tags":["side","cheap","quick","veg option"]},{"title":"Honey Glazed Salmon with Lemon","kind":"Seafood","tags":["main","quick"]},{"title":"Honey Mustard Sauce","kind":"Other","tags":["sauce"]},{"title":"Japanese Curry","kind":"Chicken","tags":["main","cheap","veg option"]},{"title":"Key Lime Pie","kind":"Vegetarian","tags":["dessert"]},{"title":"KFC Chicken and Mash Bowl","kind":"Chicken","tags":["main"]},{"title":"Kimchi Jjigae","kind":"Pork","tags":["main","cheap","quick"]},{"title":"Lasagna","kind":"Beef","tags":["main"]},{"title":"Loaded Nachos","kind":"Beef","tags":["snack","cheap","quick","veg option"]},{"title":"Loco Moco","kind":"Beef","tags":["main","cheap","quick"]},{"title":"Lumpia","kind":"Pork","tags":["snack"]},{"title":"Mac and Cheese","kind":"Vegetarian","tags":["main","cheap","quick"]},{"title":"Mango Habanero Sauce","kind":"Other","tags":["sauce"]},{"title":"Matzo Ball Soup","kind":"Vegetarian","tags":["snack","cheap"]},{"title":"Mexican Bean Dip","kind":"Beef","tags":["snack","cheap","quick","veg option"]},{"title":"Otai","kind":"Other","tags":["dessert"]},{"title":"Oyster Chilli, Ginger & Vinegar Sauce","kind":"Other","tags":["sauce"]},{"title":"Pam’s pasta salad","kind":"Vegetarian","tags":["snack","cheap","quick"]},{"title":"Panna Cotta","kind":"Vegetarian","tags":["dessert","cheap","quick"]},{"title":"Pavlova","kind":"Vegetarian","tags":["dessert","cheap"]},{"title":"Philly Cheese Steak","kind":"Beef","tags":["main","quick"]},{"title":"Pizza Bagels","kind":"Chicken","tags":["snack","veg option"]},{"title":"Pizza dough","kind":"Vegetarian","tags":["main","cheap","quick"]},{"title":"Pork Sinigang","kind":"Pork","tags":["main"]},{"title":"Pot Roast","kind":"Beef","tags":["main","quick"]},{"title":"Pumpkin Soup","kind":"Vegetarian","tags":["snack","cheap","quick"]},{"title":"Ratatouille","kind":"Vegetarian","tags":["main","cheap"]},{"title":"Red Lobster Biscuits","kind":"Vegetarian","tags":["snack","cheap"]},{"title":"Red Wine Poached Pears","kind":"Vegetarian","tags":["dessert","cheap","quick"]},{"title":"Roll n Roasters Roast Beef","kind":"Beef","tags":["main","cheap","quick"]},{"title":"San Choy Bow","kind":"Beef","tags":["snack","cheap","quick","veg option"]},{"title":"Seafood Boil","kind":"Seafood","tags":["main"]},{"title":"Shakshuka","kind":"Vegetarian","tags":["main","cheap","quick"]},{"title":"Singaporean Chili Crab","kind":"Seafood","tags":["main"]},{"title":"Slow Cook Brisket","kind":"Beef","tags":["main","quick"]},{"title":"Slow Cook Southwest Chicken","kind":"Chicken","tags":["main","quick"]},{"title":"Smashed Burgers","kind":"Beef","tags":["main","cheap","quick"]},{"title":"Spaghetti Carbonara","kind":"Pork","tags":["main","quick"]},{"title":"Spicy Roasted Broccoli","kind":"Vegetarian","tags":["side","cheap","quick"]},{"title":"Spinach and Artichoke Dip in Bread Bowl","kind":"Vegetarian","tags":["snack","quick"]},{"title":"Spuds / Jacket Potato","kind":"Chicken","tags":["main","cheap","quick","veg option"]},{"title":"Steak and Mashed Potato","kind":"Beef","tags":["main"]},{"title":"Strawberry Matcha Sago","kind":"Vegetarian","tags":["dessert"]},{"title":"Stuffed Peppers","kind":"Chicken","tags":["cheap","quick","veg option"]},{"title":"Swedish Meatballs","kind":"Beef","tags":["main","quick"]},{"title":"Tik Tok Pasta","kind":"Vegetarian","tags":["main","cheap","quick"]},{"title":"Toasties","kind":"Vegetarian","tags":["snack","cheap","quick"]}];
+function applyPack(){
+  if(!state.packs) state.packs=[];
+  if(state.packs.includes(PACK_ID)) return 0;
+  const have=new Set(state.recipes.map(r=>norm(r.title)));
+  let n=0;
+  PACK.forEach(p=>{
+    if(have.has(norm(p.title))) return;
+    state.recipes.push({ id:uid(), title:p.title, kind:p.kind||null, photo:null,
+      servings:p.servings||2, mult:1, queued:false, source:'',
+      tags:(p.tags||[]).concat('old book'),
+      ingredients:(p.ingredients||[]).map(i=>({amount:i.amount==null?null:i.amount,
+        unit:i.unit||null, item:i.item, section:null})),
+      steps:p.steps||[], notes:'', madeLog:[] });
+    n++;
+  });
+  state.packs.push(PACK_ID);
+  return n;
+}
 
 /* ---------- seed ------------------------------------------------- */
 function seed(){
@@ -987,10 +1042,11 @@ function seed(){
   };
 }
 function adopt(next){
-  state=Object.assign({ title:'Supper Club', checked:{}, extras:[], overrides:{},
+  state=Object.assign({ title:'Supper Club', checked:{}, extras:[], overrides:{}, packs:[],
     aisles:DEFAULT_AISLES.slice(), updated:null }, next);
   state.aisles=(state.aisles&&state.aisles.length)?state.aisles:DEFAULT_AISLES.slice();
   state.overrides=state.overrides||{};
+  state.packs=state.packs||[];
   state.recipes.forEach(r=>{ r.madeLog=r.madeLog||[]; r.tags=r.tags||[];
     r.ingredients=r.ingredients||[]; r.steps=r.steps||[];
     if(r.photo===undefined) r.photo=null;
@@ -1004,7 +1060,10 @@ function adopt(next){
   let data=null;
   if(saved){ try{ data=JSON.parse(saved); }catch(e){} }
   adopt(data&&Array.isArray(data.recipes)?data:seed());
+  const added=applyPack();
+  if(added){ persist(); }
   render();
+  if(added) toast(added+' recipes added from your old book');
 })();
 </script>
 </body>
