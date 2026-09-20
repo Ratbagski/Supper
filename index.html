@@ -415,6 +415,34 @@ async function ghFetch(path,opts={}){
   if(!res.ok) throw new Error('GitHub said '+res.status+(res.status===401?' — check the token':''));
   return res.json();
 }
+let remoteAt = null;   /* when the gist last changed, per GitHub */
+
+/* Is there anything to push, or anything waiting to be pulled? */
+function syncState(){
+  if(!sync.token||!sync.gist) return null;
+  const seen=[sync.lastPull,sync.lastPush].filter(Boolean).sort().pop();
+  if(remoteAt&&(!seen||remoteAt>seen)) return 'pull';
+  if(state.updated&&(!sync.lastPush||state.updated>sync.lastPush)) return 'push';
+  return null;
+}
+function syncBanner(){
+  const s=syncState();
+  if(s==='pull') return `<div class="notice" style="display:flex;gap:10px;align-items:center">
+    <span style="flex:1">The other phone has newer recipes.</span>
+    <button class="btn sm dark" data-action="pull">Pull down</button></div>`;
+  if(s==='push') return `<div class="notice" style="display:flex;gap:10px;align-items:center">
+    <span style="flex:1">You have changes she cannot see yet.</span>
+    <button class="btn sm dark" data-action="push">Push up</button></div>`;
+  return '';
+}
+async function checkRemote(){
+  if(!sync.token||!sync.gist) return;
+  try{
+    const j=await ghFetch('/gists/'+sync.gist+'/commits?per_page=1');
+    if(Array.isArray(j)&&j[0]&&j[0].committed_at){ remoteAt=j[0].committed_at; render(); }
+  }catch(e){ /* offline or bad token — stay quiet */ }
+}
+
 async function saveSync(){ await rawSet(SYNC_KEY,JSON.stringify(sync)); }
 async function cloudCreate(){
   const j=await ghFetch('/gists',{ method:'POST', body:JSON.stringify({
@@ -452,6 +480,8 @@ function render(){
   document.querySelectorAll('nav button').forEach(b=>{
     if(b.dataset.tab===ui.tab) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');
   });
+  const gear=document.querySelector('[data-action="settings"]');
+  if(gear) gear.style.color=syncState()?'var(--citrus)':'var(--steel)';
   const pane=document.getElementById('pane');
   pane.innerHTML=({recipes:viewRecipes,list:viewList,archive:viewArchive,add:viewAdd})[ui.tab]();
   window.scrollTo(0,0);
@@ -499,7 +529,7 @@ function viewRecipes(){
       </div>${mult}</article>`;
   }).join('');
 
-  return `<input class="search" type="text" id="q" placeholder="Search recipes or an ingredient" value="${esc(ui.q)}" autocomplete="off">
+  return syncBanner()+`<input class="search" type="text" id="q" placeholder="Search recipes or an ingredient" value="${esc(ui.q)}" autocomplete="off">
     <div class="chips">${chips}</div>
     <div class="chips" style="margin-top:-6px">${kindChips}</div>` + (rs.length?cards:
     `<div class="empty"><h3>Nothing here</h3><p>${ui.q||ui.filter!=='all'?'No recipes match that.':'Add a recipe, or park a TikTok link to try later.'}</p>
@@ -526,7 +556,7 @@ function viewList(){
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h11M12.5 8l4 4-4 4"/></svg></button>
     </div>`).join('')}`).join('');
 
-  return `<h2>Shopping list</h2>
+  return syncBanner()+`<h2>Shopping list</h2>
     <p class="lede">${total} item${total===1?'':'s'} from ${queued.length} recipe${queued.length===1?'':'s'}${ticked?`, ${ticked} ticked off`:''}. Ticked items are left out of the copy. The arrow moves an item to a different aisle and remembers it.</p>
     <div class="row" style="margin-bottom:6px">
       <input type="text" id="extra" placeholder="Add something else — milk, bin bags" autocomplete="off" style="flex:1;min-width:60%">
@@ -672,7 +702,7 @@ function openSettings(){
     <div class="field"><label>Share between phones</label>
       <div class="hint" style="margin:0 0 8px">Uses a private GitHub gist. Same token and file on both phones, then Push after you change things and Pull before you shop.</div>
       <input type="password" id="s_token" placeholder="GitHub token (ghp_…)" value="${esc(sync.token)}" autocomplete="off">
-      <input type="text" id="s_gist" placeholder="Gist id (leave blank to create one)" value="${esc(sync.gist)}" style="margin-top:7px" autocomplete="off">
+      <input type="text" id="s_gist" placeholder="Gist id (blank on the first phone only)" value="${esc(sync.gist)}" style="margin-top:7px" autocomplete="off">
       <button class="btn sm" style="margin-top:8px" data-action="save-sync">Save these</button>
       <div class="row" style="margin-top:9px">
         <button class="btn sm" data-action="push">Push up</button>
@@ -801,11 +831,13 @@ document.addEventListener('click',async e=>{
     state.aisles=list; persist(); closeSheet(); ui.tab='list'; render(); toast('Aisle order saved'); return; }
   if(a==='save-sync'){
     sync.token=document.getElementById('s_token').value.trim();
-    sync.gist=document.getElementById('s_gist').value.trim();
-    await saveSync(); toast('Sync details saved'); return; }
+    const g=document.getElementById('s_gist').value.trim();
+    if(g) sync.gist=g;   /* a blank box no longer clears it — that made duplicate gists */
+    await saveSync(); openSettings(); toast('Sync details saved'); return; }
   if(a==='push'){
     try{ toast('Pushing…'); const wasNew=!sync.gist; await cloudPush();
-      openSettings(); toast(wasNew?'Cloud file created — copy the gist id to her phone':'Pushed up'); }
+      remoteAt=sync.lastPush; openSettings(); render();
+      toast(wasNew?'Cloud file created — copy the gist id to her phone':'Pushed up'); }
     catch(err){ toast(err.message); } return; }
   if(a==='pull'){
     try{ if(!sync.gist){ toast('Add the gist id first'); return; }
@@ -1064,6 +1096,8 @@ function adopt(next){
   if(added){ persist(); }
   render();
   if(added) toast(added+' recipes added from your old book');
+  checkRemote();
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) checkRemote(); });
 })();
 </script>
 </body>
