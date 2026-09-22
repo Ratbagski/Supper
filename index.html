@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Supper Club</title>
+<title>Marquez Meals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
@@ -113,7 +113,7 @@
 
 <div id="app">
   <header class="bar">
-    <h1 id="appTitle">Supper Club</h1>
+    <h1 id="appTitle">Marquez Meals</h1>
     <span class="sub" id="barSub"></span>
     <button class="iconbtn" data-action="settings" aria-label="Settings, aisles and sync">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>
@@ -166,25 +166,25 @@ const RULES = [
   ['Fresh pastry',['puff pastry','filo','shortcrust','pastry sheet','pastry']],
   ['Frozen stuff',['frozen','ice cream','ice block','icy pole']],
   ['Vegies',['eggplant','aubergine']],
-  ['Asian pantry',['coconut milk','coconut cream','soy sauce','fish sauce','oyster sauce','sesame oil','chilli oil','chili oil','rice vinegar','rice wine','sweet chilli','kecap','hoisin','water chestnut','shiitake','kimchi','gochugaru','gochujang','dried shiitake']],
+  ['Asian pantry',['coconut milk','coconut cream','soy sauce','fish sauce','oyster sauce','sesame oil','chilli oil','chili oil','rice vinegar','rice wine','sweet chilli','kecap','hoisin','water chestnut','shiitake','kimchi','gochugaru','gochujang','dried shiitake','curry roux']],
   ['Eggs',['egg']],
   ['Honey',['honey']],
   ['Spreads',['peanut butter','almond butter','jam','marmalade','vegemite','nutella','tahini','hazelnut spread']],
   ['Yoghurts',['yoghurt','yogurt','greek yog']],
   ['Long life milk',['long life','uht','condensed milk','evaporated milk','almond milk','oat milk','soy milk']],
-  ['Dairy',['milk','butter','cream','cheese','parmesan','feta','mozzarella','ricotta','halloumi','mascarpone','cheddar','creme fraiche','pesto','gruyere','american cheese']],
+  ['Dairy',['milk','butter','cream','cheese','parmesan','feta','mozzarella','ricotta','halloumi','mascarpone','cheddar','creme fraiche','pesto','gruyere','american cheese','provolone','pecorino']],
   ['Fresh pasta',['fresh pasta','gnocchi','tortellini','ravioli','fresh lasagne']],
   ['Italian',['pasta','spaghetti','rigatoni','penne','risoni','orzo','lasagne','pappardelle','macaroni','fettucine','passata','tomato paste','crushed tomato','canned tomato','tinned tomato','balsamic','arborio','risotto rice','polenta','olives','caper','anchov','sun dried','pizza']],
   ['Mexican',['taco','tortilla','salsa','black bean','kidney bean','refried','jalapeno','jalapeño','chipotle','nacho','enchilada','burrito','corn chip','chickpea','baked bean','bean']],
   ['Asian pantry',['soy','noodle','miso','gochujang','sriracha','sesame','mirin','tofu','nori','wasabi','panko','dashi','sambal','curry paste','rice paper','rice','basmati','jasmine','five spice','shaoxing']],
-  ['Spices',['cumin','paprika','cayenne','turmeric','cinnamon','oregano','chilli flakes','chili flakes','curry powder','garam','coriander seed','peppercorn','black pepper','white pepper','salt','stock','bay leaf','nutmeg','cardamom','garlic powder','onion powder','vanilla','dried herb','italian herb','star anise','cloves ground','taco seasoning']],
+  ['Spices',['cumin','paprika','cayenne','turmeric','cinnamon','oregano','chilli flakes','chili flakes','curry powder','garam','coriander seed','peppercorn','black pepper','white pepper','salt','stock','bay leaf','nutmeg','cardamom','garlic powder','onion powder','vanilla','dried herb','italian herb','star anise','cloves ground','taco seasoning','allspice']],
   ['Meats',['chicken','beef','pork','lamb','mince','bacon','sausage','chorizo','ham','salami','prosciutto','pancetta','turkey','steak','thigh','drumstick','maryland','salmon','prawn','shrimp','fish','tuna','squid','mussel','cod','snapper','barramundi','rasher','brisket','ribs']],
-  ['Oils',['olive oil','vegetable oil','canola','oil','vinegar','mayonnaise','mayo','mustard','ketchup','tomato sauce','hot sauce','worcestershire','pickle','gherkin','relish','dressing']],
+  ['Oils',['olive oil','vegetable oil','canola','oil','vinegar','mayonnaise','mayo','mustard','ketchup','tomato sauce','hot sauce','worcestershire','pickle','gherkin','relish','dressing','barbecue sauce','bbq sauce','artichoke']],
   ['Sugar',['sugar','flour','baking powder','baking soda','bicarb','cornflour','cornstarch','yeast','icing','breadcrumb','desiccated coconut','golden syrup','maple syrup','gelatine','gelatin']],
   ['Chocolates',['chocolate','cocoa','choc chip','lolly','lollies']],
   ['Desserts',['custard','jelly','biscuit','wafer','meringue','cake mix','pavlova']],
   ['Cereal',['cereal','muesli','oats','porridge','weet','granola','cornflakes','chia']],
-  ['Breads',['bread','bun','baguette','sourdough','pita','naan','wrap','bagel','brioche','crumpet','english muffin','roll']],
+  ['Breads',['cob loaf','matzo','bread','bun','baguette','sourdough','pita','naan','wrap','bagel','brioche','crumpet','english muffin','roll']],
   ['Fruits',['lemon','lime','apple','banana','orange','berries','strawberr','blueberr','raspberr','grape','pear','pineapple','mango','melon','peach','plum','kiwi','passionfruit','cherry','mandarin','nectarine','apricot']],
   ['Vegies',['onion','garlic','tomato','potato','carrot','celery','cucumber','chilli','chili','capsicum','spinach','coriander','cilantro','parsley','basil','mint','ginger','shallot','lettuce','avocado','mushroom','broccoli','zucchini','courgette','cabbage','leek','corn','peas','thyme','rosemary','dill','cauliflower','kale','beetroot','pumpkin','bean sprout','snow pea','asparagus','radish','fennel','rocket','silverbeet','chives','lemongrass','salad','herb','sprout','swede','turnip','parsnip']],
   ['Drinks',['juice','soft drink','cola','sparkling','cordial','tea','coffee','beer','wine','vodka','gin','soda water','water','kombucha']],
@@ -199,6 +199,9 @@ const RULES = [
 
 /* What's in it — used for the filter row. Guessed, then editable per recipe. */
 const KINDS = ['Chicken','Beef','Pork','Lamb','Seafood','Vegetarian','Other'];
+/* Labels live as tags, so a recipe can be Chicken AND cheap AND a side. */
+const LABELS = [['quick','Quick'],['cheap','Cheap'],['side','Side'],['sauce','Sauce']];
+const hasLabel=(r,tag)=>(r.tags||[]).some(t=>String(t).toLowerCase()===tag);
 const KIND_WORDS = [
   ['Seafood',['salmon','prawn','shrimp','fish','tuna','squid','mussel','cod','snapper','barramundi','scallop','crab','lobster','octopus','anchov','sardine']],
   ['Chicken',['chicken','drumstick','maryland','chook','turkey']],
@@ -254,7 +257,7 @@ function payload(){
 /* ---------- state ------------------------------------------------ */
 let state = null;
 let sync = { token:'', gist:'', lastPush:null, lastPull:null };
-let ui = { tab:'recipes', filter:'all', kind:'any', q:'', draft:[], draftPhoto:null, editingId:null };
+let ui = { tab:'recipes', filter:'all', kind:'any', q:'', draft:[], draftPhoto:null, draftLabels:[], editingId:null };
 let photoTarget = null; /* 'draft' or a recipe id */
 
 const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -447,7 +450,7 @@ async function checkRemote(){
 async function saveSync(){ await rawSet(SYNC_KEY,JSON.stringify(sync)); }
 async function cloudCreate(){
   const j=await ghFetch('/gists',{ method:'POST', body:JSON.stringify({
-    description:'Supper Club data', public:false,
+    description:'Marquez Meals data', public:false,
     files:{ [FILE]:{ content:JSON.stringify(payload()) } } }) });
   sync.gist=j.id; sync.lastPush=new Date().toISOString();
   await saveSync(); return j.id;
@@ -474,7 +477,7 @@ async function cloudPull(){
 
 /* ---------- render ----------------------------------------------- */
 function render(){
-  document.getElementById('appTitle').textContent=state.title||'Supper Club';
+  document.getElementById('appTitle').textContent=state.title||'Marquez Meals';
   const q=state.recipes.filter(r=>r.queued).length;
   document.getElementById('barSub').textContent=q?q+' on this week':'';
   document.getElementById('listBadgeWrap').innerHTML=q?'<span class="badge">'+q+'</span>':'';
@@ -495,7 +498,10 @@ function viewRecipes(){
     if(ui.filter==='todo'&&r.madeLog.length) return false;
     if(ui.filter==='made'&&!r.madeLog.length) return false;
     if(ui.filter==='week'&&!r.queued) return false;
-    if(ui.kind!=='any'&&(r.kind||guessKind(r))!==ui.kind) return false;
+    if(ui.kind!=='any'){
+      if(ui.kind.startsWith('tag:')){ if(!hasLabel(r,ui.kind.slice(4))) return false; }
+      else if((r.kind||guessKind(r))!==ui.kind) return false;
+    }
     if(!q) return true;
     return (r.title+' '+r.tags.join(' ')+' '+r.ingredients.map(i=>i.item).join(' ')).toLowerCase().includes(q);
   }).slice().sort((a,b)=>(b.queued?1:0)-(a.queued?1:0)||a.title.localeCompare(b.title));
@@ -505,8 +511,12 @@ function viewRecipes(){
 
   const counts={};
   state.recipes.forEach(r=>{ const k=r.kind||guessKind(r); counts[k]=(counts[k]||0)+1; });
-  const kindChips=[['any','Any']].concat(KINDS.filter(k=>counts[k]).map(k=>[k,k]))
-    .map(([k,l])=>`<button class="chip" data-action="kind" data-v="${k}" aria-pressed="${ui.kind===k}">${l}${k!=='any'?' '+counts[k]:''}</button>`).join('');
+  const lCounts={};
+  LABELS.forEach(([tag])=>{ lCounts[tag]=state.recipes.filter(r=>hasLabel(r,tag)).length; });
+  const kindChips=[['any','Any',null]]
+    .concat(KINDS.filter(k=>counts[k]).map(k=>[k,k,counts[k]]))
+    .concat(LABELS.filter(([tag])=>lCounts[tag]).map(([tag,lab])=>['tag:'+tag,lab,lCounts[tag]]))
+    .map(([k,l,c])=>`<button class="chip" data-action="kind" data-v="${k}" aria-pressed="${ui.kind===k}">${l}${c?' '+c:''}</button>`).join('');
 
   const cards=rs.map(r=>{
     const n=r.ingredients.length;
@@ -616,8 +626,12 @@ function viewAdd(){
           <option value="">Work it out for me</option>
           ${KINDS.map(k=>`<option ${d.kind===k?'selected':''}>${k}</option>`).join('')}
         </select></div></div>
-    <div class="field"><label for="f_tags">Tags</label>
-      <input type="text" id="f_tags" value="${esc(d.tags.join(', '))}" placeholder="weeknight, spicy"></div>
+    <div class="field"><label>Labels</label>
+      <div class="chips" style="margin:0 0 4px">${LABELS.map(([tag,lab])=>
+        `<button class="chip" data-action="label" data-v="${tag}" aria-pressed="${ui.draftLabels.includes(tag)}">${lab}</button>`).join('')}</div>
+      <div class="hint">Tap to switch on. These show up as filters on the Recipes tab.</div></div>
+    <div class="field"><label for="f_tags">Other tags</label>
+      <input type="text" id="f_tags" value="${esc(d.tags.filter(t=>!LABELS.some(l=>l[0]===String(t).toLowerCase())).join(', '))}" placeholder="weeknight, spicy"></div>
     <div class="field"><label for="f_ing">Ingredients, one per line</label>
       <textarea id="f_ing" rows="7" placeholder="400g rigatoni&#10;2 tbsp olive oil&#10;3 cloves garlic&#10;salt to taste"></textarea>
       <button class="btn sm" style="margin-top:8px" data-action="parse-ing">Sort these out</button></div>
@@ -752,7 +766,7 @@ function collectForm(){
     servings:Math.max(1,parseInt(g('f_serves').value,10)||2),
     kind:g('f_kind').value||null,
     photo:ui.draftPhoto||null,
-    tags:g('f_tags').value.split(',').map(s=>s.trim()).filter(Boolean),
+    tags:ui.draftLabels.concat(g('f_tags').value.split(',').map(s=>s.trim()).filter(Boolean)),
     ingredients:ings,
     steps:g('f_steps').value.split('\n').map(s=>s.trim()).filter(Boolean),
     notes:g('f_notes').value.trim() };
@@ -773,9 +787,14 @@ document.addEventListener('click',async e=>{
 
   if(a==='close-sheet'){ closeSheet(); return; }
   if(a==='settings'){ openSettings(); return; }
-  if(a==='go'){ ui.tab=v; ui.editingId=null; ui.draft=[]; render(); return; }
+  if(a==='go'){ ui.tab=v; ui.editingId=null; ui.draft=[]; ui.draftLabels=[]; render(); return; }
   if(a==='filter'){ ui.filter=v; render(); return; }
   if(a==='kind'){ ui.kind=v; render(); return; }
+  if(a==='label'){
+    const snap=formSnapshot();
+    const i=ui.draftLabels.indexOf(v);
+    if(i>=0) ui.draftLabels.splice(i,1); else ui.draftLabels.push(v);
+    render(); formRestore(snap); return; }
   if(a==='photo'){ pickPhoto(id); return; }
   if(a==='photo-del'){
     if(id==='draft'){ const snap=formSnapshot(); ui.draftPhoto=null; render(); formRestore(snap); }
@@ -792,8 +811,10 @@ document.addEventListener('click',async e=>{
     r.queued=false; persist(); closeSheet(); ui.tab='archive'; render(); toast('Logged — nice work'); return; }
   if(a==='requeue'){ const r=byId(id); r.queued=true; r.mult=r.mult||1; persist(); ui.tab='recipes'; render(); toast('Back on this week'); return; }
   if(a==='edit'){ const r=byId(id); ui.editingId=id; ui.draft=r.ingredients.slice();
-    ui.draftPhoto=r.photo||null; closeSheet(); ui.tab='add'; render(); return; }
-  if(a==='cancel-edit'){ ui.editingId=null; ui.draft=[]; ui.draftPhoto=null; ui.tab='recipes'; render(); return; }
+    ui.draftPhoto=r.photo||null;
+    ui.draftLabels=LABELS.map(l=>l[0]).filter(t=>hasLabel(r,t));
+    closeSheet(); ui.tab='add'; render(); return; }
+  if(a==='cancel-edit'){ ui.editingId=null; ui.draft=[]; ui.draftPhoto=null; ui.draftLabels=[]; ui.tab='recipes'; render(); return; }
   if(a==='delete'){ const r=byId(id);
     if(!confirm('Delete “'+r.title+'” for good?')) return;
     state.recipes=state.recipes.filter(x=>x.id!==id); persist(); closeSheet(); render(); toast('Deleted'); return; }
@@ -810,7 +831,7 @@ document.addEventListener('click',async e=>{
     const data=collectForm(); if(!data) return;
     if(ui.editingId){ Object.assign(byId(ui.editingId),data); toast('Saved'); }
     else { state.recipes.push(Object.assign({id:uid(),queued:false,mult:1,madeLog:[]},data)); toast('Added to the book'); }
-    ui.editingId=null; ui.draft=[]; ui.draftPhoto=null; ui.tab='recipes'; persist(); render(); return; }
+    ui.editingId=null; ui.draft=[]; ui.draftPhoto=null; ui.draftLabels=[]; ui.tab='recipes'; persist(); render(); return; }
 
   if(a==='copy'){ const t=listAsText(); if(!t){ toast('Nothing to copy yet'); return; }
     copyText(t,'Copied — paste it into Keep'); return; }
@@ -823,7 +844,7 @@ document.addEventListener('click',async e=>{
   if(a==='move'){ openMove(el.dataset.item,el.dataset.aisle); return; }
   if(a==='move-save'){ state.overrides[norm(el.dataset.item)]=v; persist(); closeSheet(); render(); toast('Moved to '+v); return; }
 
-  if(a==='rename'){ state.title=document.getElementById('s_name').value.trim()||'Supper Club';
+  if(a==='rename'){ state.title=document.getElementById('s_name').value.trim()||'Marquez Meals';
     persist(); closeSheet(); render(); toast('Renamed'); return; }
   if(a==='save-aisles'){
     const list=document.getElementById('s_aisles').value.split('\n').map(s=>s.trim()).filter(Boolean);
@@ -925,14 +946,14 @@ document.addEventListener('keydown',e=>{
 });
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{
   ui.tab=b.dataset.tab;
-  if(ui.tab!=='add'){ ui.editingId=null; ui.draft=[]; ui.draftPhoto=null; }
+  if(ui.tab!=='add'){ ui.editingId=null; ui.draft=[]; ui.draftPhoto=null; ui.draftLabels=[]; }
   render();
 }));
 
 /* installable manifest, built here so this stays one file */
 (function(){
   try{
-    const man={ name:'Supper Club', short_name:'Supper', start_url:'.', display:'standalone',
+    const man={ name:'Marquez Meals', short_name:'Marquez', start_url:'.', display:'standalone',
       background_color:'#EBF0E4', theme_color:'#16281E',
       icons:[{src:'data:image/svg+xml,'+encodeURIComponent(
         '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512"><rect width="512" height="512" fill="#16281E"/><circle cx="256" cy="256" r="150" fill="none" stroke="#F0B429" stroke-width="26"/><path d="M256 150v212M180 220h152" stroke="#EBF0E4" stroke-width="22" stroke-linecap="round"/></svg>'),
@@ -997,11 +1018,41 @@ function applyPack2(){
   return n;
 }
 
+/* ---------- second batch of fill-ins ----------------------------- */
+const PACK3_ID='cheapquick2';
+const PACK3=[{"title":"Burger Steak","servings":4,"ingredients":["600 g beef mince","1 onion","1 egg","0.5 cup panko breadcrumbs","0.25 cup milk","2 tbsp butter","1 tbsp plain flour","2 cups beef stock","1 tbsp soy sauce","200 g mushrooms","1 tsp salt","0.5 tsp black pepper"],"steps":["Soak the panko in the milk for 5 minutes, then mix into the mince with half the grated onion, the egg, salt and pepper.","Shape into four thick oval patties and chill 15 minutes so they hold together.","Fry 4 minutes a side in a little butter until well browned. Set aside.","In the same pan cook the sliced mushrooms and the rest of the onion in the butter, stir in the flour for a minute.","Add the stock and soy, simmer until it thickens, then return the patties to warm through in the gravy."]},{"title":"Caramelised Onion and Beef Sausage Rolls","servings":6,"ingredients":["500 g beef mince","3 sheets puff pastry","2 onions","2 tbsp butter","1 tbsp brown sugar","1 tbsp balsamic","0.5 cup panko breadcrumbs","1 egg","2 tsp dried thyme","1 tsp salt","0.5 tsp black pepper","1 tbsp sesame seeds"],"steps":["Cook the sliced onions in the butter over low heat for 30 minutes with the sugar and a pinch of salt, then the balsamic. Cool completely — warm onion makes the mince greasy.","Mix the mince with the cooled onions, panko, thyme, salt and pepper.","Cut each pastry sheet in half. Pipe a log of mince down one edge, brush the far edge with egg, roll up and press the seam.","Chill the rolls 20 minutes, then cut into thirds and slash the tops.","Brush with egg, scatter sesame seeds, bake at 200C for 30 minutes until deep golden underneath."],"notes":"Freeze them unbaked, cook from frozen with an extra 10 minutes."},{"title":"Chicken Katsu","servings":4,"ingredients":["4 chicken thighs","1 cup plain flour","2 eggs","2 cups panko breadcrumbs","2 cups vegetable oil","1 tsp salt","0.5 tsp white pepper","3 tbsp tomato sauce","1 tbsp Worcestershire sauce","1 tbsp soy sauce","1 tsp sugar","1 tsp dijon mustard","3 cups cooked rice"],"steps":["Flatten the thighs to an even thickness and season with salt and white pepper.","Flour, then egg, then panko — press the panko on hard and leave the crumbed pieces to sit 10 minutes.","Fry in 2cm of oil at moderate heat, 4 minutes a side, until deep gold. Drain on a rack.","Stir the tomato sauce, Worcestershire, soy, sugar and mustard together for the katsu sauce.","Rest 3 minutes, slice into fingers, serve over rice with the sauce poured across."],"notes":"Thigh beats breast here, it stays juicy under the crumb."},{"title":"Crispy Buffalo Chicken Wings","servings":4,"ingredients":["1.5 kg chicken wings","1 tbsp baking powder","1 tsp salt","80 g butter","0.5 cup hot sauce","1 tbsp honey","1 tsp vinegar","0.5 tsp garlic powder","0.5 cup blue cheese dressing","2 celery sticks"],"steps":["Pat the wings bone dry. Toss with the baking powder and salt — baking powder, not soda, and this is what crisps the skin.","Rest them uncovered on a rack in the fridge for an hour if you have it.","Bake on a rack at 120C for 30 minutes, then crank to 220C for 45 minutes until blistered.","Melt the butter with the hot sauce, honey, vinegar and garlic powder.","Toss the hot wings in the sauce and serve immediately with dressing and celery."],"notes":"Low then high is the whole method. Sauce them at the last second."},{"title":"Firecracker Salmon","servings":2,"ingredients":["2 salmon fillets","2 tbsp sriracha","2 tbsp honey","1 tbsp soy sauce","1 tbsp rice vinegar","3 clove garlic","1 tsp sesame oil","1 tbsp vegetable oil","2 spring onion","1 tsp sesame seeds"],"steps":["Whisk the sriracha, honey, soy, vinegar, crushed garlic and sesame oil into a glaze.","Pat the salmon dry and sear skin-side down in the vegetable oil for 4 minutes without moving it.","Flip, spoon half the glaze over, and cook 3 minutes more.","Add the rest of the glaze to the pan and let it bubble down over the fish for a minute.","Top with spring onion and sesame seeds."]},{"title":"Garlic Shrimp/Mussel/Clam Scampi","servings":2,"ingredients":["400 g prawns","200 g spaghetti","60 g butter","3 tbsp olive oil","6 clove garlic","0.5 tsp chilli flakes","0.5 cup dry white wine","2 tbsp lemon juice","0.25 cup parsley","1 tsp salt"],"steps":["Boil the spaghetti, keeping a mug of the water.","Cook the thinly sliced garlic gently in the oil and half the butter until pale gold, not brown. Burnt garlic ruins it.","Add the chilli flakes and wine, reduce by half.","Add the prawns and cook 2 minutes, turning once, until just opaque.","Off the heat stir in the rest of the butter, the lemon and parsley, then toss the pasta through with a splash of its water."],"notes":"Works the same with mussels or clams — cover and steam them 4 minutes instead."},{"title":"General Tso’s Chicken","servings":4,"ingredients":["700 g chicken thigh, diced","0.5 cup cornflour","1 egg","2 cups vegetable oil","3 tbsp soy sauce","3 tbsp sugar","2 tbsp rice vinegar","1 tbsp hoisin","4 clove garlic","1 tbsp grated ginger","6 dried chillies","1 tsp sesame oil","1 tbsp cornflour","2 tbsp water","2 spring onion"],"steps":["Toss the diced chicken with the egg, then the cornflour, until each piece is dry-coated.","Fry in batches in hot oil for 4 minutes until pale gold, then fry everything again for 2 minutes. The second fry is what keeps it crunchy under sauce.","Mix the soy, sugar, vinegar and hoisin. Slurry the extra cornflour with the water.","In a dry wok, fry the chillies, garlic and ginger 30 seconds, add the sauce, bring to a boil, then the slurry until glossy.","Toss the chicken through off the heat, finish with sesame oil and spring onion."]},{"title":"Green/Red Thai Curry","servings":4,"ingredients":["600 g chicken thigh, sliced","3 tbsp Thai curry paste","2 can coconut milk","2 tbsp fish sauce","1 tbsp brown sugar","1 red capsicum","150 g green beans","1 zucchini","4 kaffir lime leaves","0.5 cup Thai basil","1 tbsp vegetable oil","1 tbsp lime juice"],"steps":["Spoon the thick cream from the top of one coconut milk can into a hot pan with the oil and fry the curry paste in it for 3 minutes until it splits and smells strong. This step is the difference between good and flat.","Add the chicken and coat it in the paste.","Pour in the rest of the coconut milk, the fish sauce, sugar and lime leaves. Simmer 10 minutes.","Add the vegetables and simmer 6 more minutes.","Off the heat, stir in lime juice and Thai basil. Taste — it usually wants more fish sauce."],"notes":"Swap chicken for tofu and fish sauce for soy to make it vegetarian."},{"title":"Hawaiian Garlic Shrimp and Rice","servings":2,"ingredients":["500 g prawns","0.25 cup plain flour","100 g butter","8 clove garlic","1 tsp paprika","0.5 tsp cayenne pepper","1 tbsp lemon juice","0.25 cup parsley","1 tsp salt","3 cups cooked rice"],"steps":["Toss the peeled prawns in the flour with the paprika, cayenne and salt.","Melt half the butter and cook the chopped garlic gently for 2 minutes until fragrant.","Add the prawns in one layer and cook 2 minutes a side.","Add the rest of the butter and the lemon, swirl into a sauce.","Parsley over, spoon everything including the butter onto the rice."],"notes":"It is a garlic butter dish. Do not cut the butter."},{"title":"Honey Glazed Salmon with Lemon","servings":2,"ingredients":["2 salmon fillets","3 tbsp honey","2 tbsp lemon juice","2 clove garlic","1 tbsp soy sauce","1 tbsp butter","1 tbsp olive oil","0.5 tsp salt","0.5 tsp black pepper","1 lemon"],"steps":["Season the salmon and sear it skin-side down in the oil, 4 minutes, undisturbed.","Mix the honey, lemon juice, soy and crushed garlic.","Flip the salmon, add the butter and the honey mixture, and tilt the pan to spoon the glaze over for 3 minutes.","Let the glaze reduce until it coats the fish, then serve with lemon wedges."]},{"title":"Japanese Curry","servings":4,"ingredients":["600 g chicken thigh, diced","2 onions","2 carrots","3 potatoes","1 box Japanese curry roux","4 cups chicken stock","1 tbsp vegetable oil","1 tbsp soy sauce","1 tbsp honey","1 apple, grated","3 cups cooked rice"],"steps":["Brown the chicken in the oil in a heavy pot, then set aside.","Cook the sliced onions 10 minutes until golden — do not skip this, it is where the sweetness comes from.","Add the chunked carrot and potato, the chicken, and the stock. Simmer 20 minutes until the potato is soft.","Turn the heat off. Break the roux blocks in and stir until fully dissolved.","Add the grated apple, soy and honey, simmer 5 more minutes until thick. Serve over rice."],"notes":"Boxed roux is what everyone in Japan uses. It is not cheating."},{"title":"Matzo Ball Soup","servings":4,"ingredients":["1 cup matzo meal","4 eggs","0.25 cup vegetable oil","0.25 cup soda water","1 tsp salt","8 cups chicken stock","2 carrots","2 celery sticks","1 onion","0.25 cup dill","0.5 tsp black pepper"],"steps":["Whisk the eggs with the oil, soda water and salt, then fold in the matzo meal. Refrigerate 1 hour — it must firm up.","Simmer the stock with the sliced carrot, celery and quartered onion for 30 minutes.","Wet your hands and roll the mix into loose balls. Loose, not packed, or they come out like golf balls.","Drop them into a separate pot of gently simmering salted water, cover, and cook 30 minutes without lifting the lid.","Lift the balls into bowls, ladle the soup over, finish with dill and pepper."],"notes":"Cook the balls separately or they cloud the soup."},{"title":"Pavlova","servings":8,"ingredients":["4 egg whites","1 cup caster sugar","1 tsp cornflour","1 tsp white vinegar","0.5 tsp vanilla","300 ml thickened cream","2 cups mixed berries","2 passionfruit"],"steps":["Heat the oven to 150C. Everything must be spotlessly clean and grease free or the whites will not hold.","Beat the whites to soft peaks, then add the sugar a spoonful at a time, beating until the mixture is stiff and you cannot feel grit between your fingers.","Fold in the cornflour, vinegar and vanilla.","Pile onto lined tray in a circle with a slight dip in the middle. Bake 15 minutes, then drop to 120C for 1 hour.","Turn the oven off and leave it in there until completely cold. Cracks come from cooling too fast.","Top with whipped cream, berries and passionfruit just before serving."],"notes":"Make the shell a day ahead, top it at the table."},{"title":"Philly Cheese Steak","servings":2,"ingredients":["400 g beef sirloin","2 hoagie rolls","1 onion","1 green capsicum","6 slice provolone","2 tbsp butter","1 tbsp vegetable oil","1 tsp salt","0.5 tsp black pepper"],"steps":["Freeze the steak 30 minutes, then slice it as thinly as you can against the grain.","Cook the sliced onion and capsicum in the oil for 8 minutes until soft and browned at the edges. Push to one side of the pan.","Throw the beef onto the hot side, spread it out, and cook 2 minutes, chopping it up with the edge of a spatula.","Mix everything together, lay the cheese over the top and let it melt into the meat.","Butter and toast the rolls, then scoop the lot straight in."]},{"title":"Pot Roast","servings":6,"ingredients":["1.5 kg beef chuck","2 tbsp vegetable oil","2 onions","4 carrots","4 potatoes","4 clove garlic","2 tbsp tomato paste","1 cup red wine","3 cups beef stock","3 sprig thyme","2 bay leaf","2 tsp salt","1 tsp black pepper"],"steps":["Heat the oven to 160C. Dry the beef, salt it heavily, and sear it hard on every side in the oil. Take your time here.","Set the beef aside. Cook the onions and garlic in the same pot, add the tomato paste and fry 2 minutes.","Deglaze with the wine, scraping everything up, and reduce by half.","Return the beef with the stock, thyme and bay. Lid on, into the oven for 2.5 hours.","Add the chunked carrot and potato and cook 1 hour more, until the beef pulls apart with a fork.","Rest 20 minutes, then shred and serve in the braising liquid."],"notes":"Not quick. Worth clearing an afternoon for."},{"title":"Ratatouille","servings":4,"ingredients":["1 eggplant","2 zucchini","1 red capsicum","1 yellow capsicum","4 tomatoes","1 onion","4 clove garlic","0.25 cup olive oil","1 tbsp tomato paste","2 sprig thyme","0.25 cup basil","1 tsp salt"],"steps":["Salt the diced eggplant and leave it 20 minutes, then pat dry.","Fry each vegetable separately in oil until browned, setting each aside as it is done. Cooking them together turns it to mush.","Soften the onion and garlic last, add the tomato paste and fry it off.","Return everything with the chopped tomatoes and thyme, season, and simmer gently 25 minutes.","Off the heat, stir the torn basil through and add a last splash of olive oil."],"notes":"Better the next day, cold or warm."},{"title":"Red Lobster Biscuits","servings":6,"ingredients":["2 cups self raising flour","1 tbsp sugar","1 tsp garlic powder","0.5 tsp salt","1.5 cups grated cheddar","1 cup buttermilk","60 g butter, melted","60 g butter for brushing","1 tsp dried parsley"],"steps":["Heat the oven to 220C. Mix the flour, sugar, garlic powder and salt, then the cheese.","Stir in the buttermilk and the first lot of melted butter until just combined. Stop as soon as it comes together — overmixing makes them tough.","Drop rough spoonfuls onto a lined tray, keeping them craggy.","Bake 12 to 14 minutes until golden.","Melt the second lot of butter with the parsley and extra garlic powder, and brush it over while they are still hot."]},{"title":"Slow Cook Brisket","servings":8,"ingredients":["2 kg beef brisket","2 tbsp brown sugar","1 tbsp paprika","1 tbsp salt","2 tsp garlic powder","2 tsp onion powder","1 tsp black pepper","1 tsp cayenne pepper","1 cup beef stock","0.5 cup barbecue sauce","2 tbsp apple cider vinegar"],"steps":["Mix the sugar, spices, salt and pepper and rub it over the whole brisket. Leave it overnight in the fridge if you can.","Sear it on all sides in a hot dry pan, fat cap first.","Put it fat-side up in the slow cooker with the stock and vinegar poured around, not over, the rub.","Low for 9 hours. Do not lift the lid to check.","Rest it 30 minutes before slicing against the grain. Reduce the cooking liquid with the barbecue sauce and spoon over."],"notes":"Nine hours, so start it in the morning."},{"title":"Slow Cook Southwest Chicken","servings":4,"ingredients":["700 g chicken thigh","1 can black beans, drained","1 cup frozen corn","1 can crushed tomatoes","1 onion","3 clove garlic","1 tbsp cumin","1 tbsp paprika","1 tsp chilli powder","1 tsp oregano","1 tsp salt","1 lime","0.5 cup coriander","0.5 cup sour cream"],"steps":["Put the chicken in the slow cooker with the onion, garlic, tomatoes, beans, corn and all the spices. Stir to coat.","Low for 6 hours, or high for 3.","Shred the chicken with two forks straight in the pot and stir it back through the sauce.","Lime juice and coriander at the end, sour cream on top. Good in wraps or over rice."]},{"title":"Spaghetti Carbonara","servings":2,"ingredients":["200 g spaghetti","120 g guanciale or pancetta","2 eggs","1 egg yolk","60 g grated pecorino","1 tsp black pepper","0.5 tsp salt"],"steps":["Boil the spaghetti in well salted water. No cream goes anywhere near this.","Render the diced pancetta in a cold dry pan over medium heat until crisp, keeping the fat.","Whisk the eggs, extra yolk, pecorino and a lot of black pepper into a paste.","Drain the pasta and tip it into the pan with the pancetta, off the heat, tossing to coat in the fat.","Wait 30 seconds, then add the egg mixture and toss hard, loosening with pasta water until it turns glossy. Too hot and you get scrambled egg."],"notes":"The pan being off the heat is the entire technique."},{"title":"Spinach and Artichoke Dip in Bread Bowl","servings":6,"ingredients":["1 cob loaf","250 g cream cheese","0.5 cup sour cream","0.5 cup mayonnaise","250 g frozen spinach, thawed","1 can artichoke hearts, drained","1.5 cups grated mozzarella","0.5 cup grated parmesan","3 clove garlic","0.5 tsp black pepper"],"steps":["Heat the oven to 190C. Squeeze the spinach absolutely dry in a tea towel — this is the one step people skip and then wonder why it is watery.","Cut the top off the loaf and hollow it out, tearing the removed bread into dipping chunks.","Mix the cream cheese, sour cream, mayo, garlic, chopped artichokes, spinach and most of the cheese.","Fill the loaf, top with the rest of the cheese, and bake 30 minutes until bubbling.","Toast the bread chunks alongside for the last 10 minutes."]},{"title":"Swedish Meatballs","servings":4,"ingredients":["500 g beef mince","250 g pork mince","1 onion","0.5 cup panko breadcrumbs","0.25 cup milk","1 egg","0.5 tsp allspice","0.25 tsp nutmeg","40 g butter","0.33 cup plain flour","3 cups beef stock","0.5 cup thickened cream","1 tbsp soy sauce","1 tsp dijon mustard","1 tsp salt"],"steps":["Soak the panko in the milk. Grate the onion in and mix with both minces, the egg, allspice, nutmeg and salt.","Roll into small balls, about 24, and chill 20 minutes.","Brown them in batches in half the butter — do not crowd the pan. Set aside.","Melt the rest of the butter, whisk in the flour and cook 2 minutes, then add the stock slowly until smooth.","Stir in the cream, soy and mustard, return the meatballs, and simmer 10 minutes until cooked through."],"notes":"Allspice and nutmeg are what make them Swedish rather than just meatballs."}];
+function applyPack3(){
+  if(!state.packs) state.packs=[];
+  if(state.packs.includes(PACK3_ID)) return 0;
+  let n=0;
+  PACK3.forEach(p=>{
+    const key=norm(p.title);
+    let r=state.recipes.find(x=>norm(x.title)===key);
+    const ings=(p.ingredients||[]).map(l=>parseLine(l)).filter(Boolean);
+    if(r){
+      if(!r.ingredients.length) r.ingredients=ings;
+      if(!r.steps.length) r.steps=p.steps||[];
+      if(!r.servings||r.servings===2) r.servings=p.servings||r.servings;
+      if(!r.notes&&p.notes) r.notes=p.notes;
+      if(!r.kind) r.kind=guessKind(r);
+      n++;
+    } else {
+      const rec={ id:uid(), title:p.title, photo:null, servings:p.servings||2, mult:1,
+        queued:false, source:'', tags:[], ingredients:ings, steps:p.steps||[],
+        notes:p.notes||'', madeLog:[] };
+      rec.kind=guessKind(rec);
+      state.recipes.push(rec); n++;
+    }
+  });
+  state.packs.push(PACK3_ID);
+  return n;
+}
+
 /* ---------- seed ------------------------------------------------- */
 function seed(){
   const ing=(a,u,i,s)=>({amount:a,unit:u,item:i,section:s});
   return {
-    title:'Supper Club', updated:new Date().toISOString(),
+    title:'Marquez Meals', updated:new Date().toISOString(),
     checked:{}, extras:[], overrides:{}, aisles:DEFAULT_AISLES.slice(),
     recipes:[
       { id:'r1', kind:'Chicken', photo:null, title:'Sticky honey soy baked chicken', servings:5, mult:1, queued:true,
@@ -1106,11 +1157,12 @@ function seed(){
   };
 }
 function adopt(next){
-  state=Object.assign({ title:'Supper Club', checked:{}, extras:[], overrides:{}, packs:[],
+  state=Object.assign({ title:'Marquez Meals', checked:{}, extras:[], overrides:{}, packs:[],
     aisles:DEFAULT_AISLES.slice(), updated:null }, next);
   state.aisles=(state.aisles&&state.aisles.length)?state.aisles:DEFAULT_AISLES.slice();
   state.overrides=state.overrides||{};
   state.packs=state.packs||[];
+  if(state.title==='Supper Club') state.title='Marquez Meals';
   state.recipes.forEach(r=>{ r.madeLog=r.madeLog||[]; r.tags=r.tags||[];
     r.ingredients=r.ingredients||[]; r.steps=r.steps||[];
     if(r.photo===undefined) r.photo=null;
@@ -1125,7 +1177,7 @@ function adopt(next){
   if(saved){ try{ data=JSON.parse(saved); }catch(e){} }
   adopt(data&&Array.isArray(data.recipes)?data:seed());
   const added=applyPack();
-  const filled=applyPack2();
+  const filled=applyPack2()+applyPack3();
   if(added||filled){ persist(); }
   render();
   if(added) toast(added+' recipes added from your old book');
